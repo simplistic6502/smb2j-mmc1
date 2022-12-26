@@ -1,0 +1,5 @@
+*.nes
+*.fds
+*.nes.map
+*.dbg
+*.lst
