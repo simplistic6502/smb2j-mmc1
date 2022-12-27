@@ -189,9 +189,6 @@ WorldBAreas: .db $22, $2c, $00, $23, $61
 WorldCAreas: .db $24, $25, $26, $62
 WorldDAreas: .db $27, $28, $29, $63
 
-AreaDataOfsLoopback:
-  .db $0c, $0c, $42, $42, $10, $10, $30, $30, $06, $0c, $54, $06
-
 EnemyAddrHOffsets:
   .db $2c, $0a, $27, $00
 

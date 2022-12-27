@@ -13539,6 +13539,11 @@ ISCont: sta ScoreAndCoinDisplay,y   ;reset score
 
 ;-------------------------------------------------------------------------------------
 
+AreaDataOfsLoopback:
+  .db $0c, $0c, $42, $42, $10, $10, $30, $30, $06, $0c, $54, $06
+
+;-------------------------------------------------------------------------------------
+
 GameMenuRoutine:
               lda SavedJoypadBits         ;check to see if the player pressed start
               and #Start_Button
