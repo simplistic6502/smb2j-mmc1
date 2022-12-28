@@ -325,7 +325,7 @@ E_CastleArea14:
 
 ;level 1-1
 E_GroundArea1:
-  .db $07, $8e, $47, $03, $0f, $03, $10, $38, $1b, $80, $53, $06, $77, $0e, $83, $83
+  .db $19, $8e, $47, $03, $0f, $03, $10, $38, $1b, $80, $53, $06, $77, $0e, $83, $83 ;PAL diff: Koopa Paratroopa in slightly different position
   .db $a0, $3d, $90, $3b, $90, $b7, $60, $bc, $b7, $0e, $ee, $42, $00, $f7, $80, $6b
   .db $83, $1b, $83, $ab, $06, $ff
 

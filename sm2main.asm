@@ -9,7 +9,7 @@
   .db 2                                         ;  CHR
   .db $13                                       ;  mirroring type and mapper number lower nibble
   .db $00                                       ;  mapper number upper nibble
-  .db $00,$00,$00,$00,$00,$00,$00,$00
+  .db $00,$01,$00,$00,$00,$00,$00,$00
 
 .org $8000
 .include "sound.asm"
@@ -134,7 +134,7 @@ CheckIntervalTC:
    ldx #$14                  ;set offset to decrement only frame timers
    dec IntervalTimerControl  ;if interval timer control not expired, branch
    bpl DecrTheTimers         ;to skip and thus decrement only frame timers
-   lda #$14
+   lda #$11                  ;PAL diff: Interval timer is 18 frames (vs. 21 for NTSC)
    sta IntervalTimerControl  ;otherwise reset interval timer control to 20 frames
    ldx #$23                  ;and load offset to decrement frame and interval timers
 DecrTheTimers:
@@ -1938,7 +1938,7 @@ GameTimerData:
 Entrance_GameTimerSetup:
           lda ScreenLeft_PageLoc      ;set current page for area objects
           sta Player_PageLoc          ;as page location for player
-          lda #$28                    ;store value here
+          lda #$70                    ;PAL diff: Player's initial downward acceleration is higher
           sta VerticalForceDown       ;for fractional movement downwards if necessary
           lda #$01                    ;set high byte of player position and
           sta PlayerFacingDir         ;set facing direction so that player faces right
@@ -4181,35 +4181,35 @@ InitCSTimer: sta ClimbSideTimer       ;initialize timer here
 ;$00 - used to store offset to friction data
 
 MarioJumpMForceData:
-      .db $20, $20, $1e, $28, $28, $0d, $04
+      .db $30, $30, $2d, $38, $38, $0d, $04 ;PAL diff: Faster acceleration to compensate FPS difference
 
 MarioFallMForceData:
-      .db $70, $70, $60, $90, $90, $0a, $09
+      .db $a8, $a8, $90, $d0, $d0, $0a, $09 ;PAL diff: Faster acceleration to compensate FPS difference
 
 MarioFrictionData:
-      .db $e4, $98, $d0
+      .db $c0, $00, $80                     ;PAL diff: Faster acceleration to compensate FPS difference
 
 LuigiJumpMForceData:
-      .db $18, $18, $18, $22, $22, $0d, $04
+      .db $22, $22, $22, $30, $30, $0d, $04 ;PAL diff: Faster acceleration to compensate FPS difference
 
 LuigiFallMForceData:
-      .db $42, $42, $3e, $5d, $5d, $0a, $09
+      .db $64, $64, $5d, $86, $86, $0a, $09 ;PAL diff: Faster acceleration to compensate FPS difference
 
 LuigiFrictionData:
-      .db $b4, $68, $a0
+      .db $00, $00, $00                     ;PAL diff: Faster acceleration to compensate FPS difference
 
 PlayerYSpdData:
-      .db $fc, $fc, $fc, $fb, $fb, $fe, $ff
+      .db $fb, $fb, $fb, $fa, $fa, $fe, $ff ;PAL diff: Faster speed to compensate FPS difference
 
 InitMForceData:
-      .db $00, $00, $00, $00, $00, $80, $00
+      .db $34, $34, $34, $00, $00, $80, $00 ;PAL diff: Faster speed to compensate FPS difference
 
 MaxLeftXSpdData:
-      .db $d8, $e8, $f0
+      .db $d0, $e4, $ed                     ;PAL diff: Faster speed to compensate FPS difference
 
 MaxRightXSpdData:
-      .db $28, $18, $10
-      .db $0c ;used for pipe intros
+      .db $30, $1c, $13                     ;PAL diff: Faster speed to compensate FPS difference
+      .db $0e ;used for pipe intros
 
 Climb_Y_SpeedData:
       .db $00, $ff, $01
@@ -4271,16 +4271,16 @@ InitJS:    lda #$20                   ;set jump/swim timer
            lda #$01                   ;set player state to jumping/swimming
            sta Player_State
            lda Player_XSpeedAbsolute  ;check value related to walking/running speed
-           cmp #$09
+           cmp #$0a                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcc ChkWtr                 ;branch if below certain values, increment Y
            iny                        ;for each amount equal or exceeded
-           cmp #$10
+           cmp #$12                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcc ChkWtr
            iny
-           cmp #$19
+           cmp #$1d                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcc ChkWtr
            iny
-           cmp #$1c
+           cmp #$22                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcc ChkWtr                 ;note that for jumping, range is 0-4 for Y
            iny
 ChkWtr:    lda #$01                   ;set value here (apparently always set to 1)
@@ -4328,8 +4328,8 @@ X_Physics: ldy #$00
            sty $00                    ;init value here
            lda Player_State           ;if mario is on the ground, branch
            beq ProcPRun
-           lda Player_XSpeedAbsolute  ;check something that seems to be related
-           cmp #$19                   ;to mario's speed
+           lda Player_XSpeedAbsolute  ;check something that seems to be related to mario's speed
+           cmp #$1d                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcs GetXPhy                ;if =>$19 branch here
            bcc ChkRFast               ;if not branch elsewhere
 ProcPRun:  iny                        ;if mario on the ground, increment Y
@@ -4348,10 +4348,10 @@ ChkRFast:  iny                        ;if running timer not set or level type is
            inc $00                    ;increment Y again and temp variable in memory
            lda RunningSpeed
            bne FastXSp                ;if running speed set here, branch
-           lda Player_XSpeedAbsolute
-           cmp #$21                   ;otherwise check player's walking/running speed
+           lda Player_XSpeedAbsolute  ;otherwise check player's walking/running speed
+           cmp #$27                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcc GetXPhy                ;if less than a certain amount, branch ahead
-FastXSp:   inc $00                    ;if running speed set or speed => $21 increment $00
+FastXSp:   inc $00                    ;if running speed set or speed => $27 increment $00
            jmp GetXPhy                ;and jump ahead
 SetRTmr:   lda #$0a                   ;if b button pressed, set running timer
            sta RunningTimer
@@ -4363,7 +4363,7 @@ GetXPhy:   lda MaxLeftXSpdData,y      ;get maximum speed to the left
            ldy #$03                   ;otherwise set Y to 3
 GetXPhy2:  lda MaxRightXSpdData,y     ;get maximum speed to the right
            sta MaximumRightSpeed
-           lda #$00
+           lda #$01                   ;PAL diff: Faster acceleration to compensate FPS difference
            sta FrictionAdderHigh      ;init something here
            ldy $00                    ;get other value in memory
            lda SelectedPlayer         ;check selected player
@@ -4387,15 +4387,15 @@ ExitPhy:   rts
 ;-------------------------------------------------------------------------------------
 
 PlayerAnimTmrData:
-      .db $02, $04, $07
+      .db $02, $03, $05                ;PAL diff: Adjusted timing data to compensate FPS difference
 
 GetPlayerAnimSpeed:
             ldy #$00                   ;initialize offset in Y
-            lda Player_XSpeedAbsolute  ;check player's walking/running speed
-            cmp #$1c                   ;against preset amount
+            lda Player_XSpeedAbsolute  ;check player's walking/running speed against preset amount
+            cmp #$20                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
             bcs SetRunSpd              ;if greater than a certain amount, branch ahead
             iny                        ;otherwise increment Y
-            cmp #$0e                   ;compare against lower amount
+            cmp #$10                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
             bcs ChkSkid                ;if greater than this but not greater than first, skip increment
             iny                        ;otherwise increment Y again
 ChkSkid:    lda SavedJoypadBits        ;get controller bits
@@ -4407,8 +4407,8 @@ ChkSkid:    lda SavedJoypadBits        ;get controller bits
             lda #$00                   ;otherwise set zero value here
 SetRunSpd:  sta RunningSpeed           ;store zero or running speed here
             jmp SetAnimSpd
-ProcSkid:   lda Player_XSpeedAbsolute  ;check player's walking/running speed
-            cmp #$0b                   ;against one last amount
+ProcSkid:   lda Player_XSpeedAbsolute  ;check player's walking/running speed against one last amount
+            cmp #$0d                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
             bcs SetAnimSpd             ;if greater than this amount, branch
             lda PlayerFacingDir
             sta Player_MovingDir       ;otherwise use facing direction to set moving direction
@@ -4519,7 +4519,7 @@ BublLoop: stx ObjectOffset            ;store offset
 BublExit: rts                         ;then leave
 
 FireballXSpdData:
-      .db $40, $c0
+      .db $4c, $b4                  ;PAL diff: Faster speed to compensate FPS difference
 
 FireballObjCore:
          stx ObjectOffset             ;store offset as current object
@@ -4544,7 +4544,7 @@ FireballObjCore:
          dey                          ;decrement to use as offset here
          lda FireballXSpdData,y       ;set horizontal speed of fireball accordingly
          sta Fireball_X_Speed,x
-         lda #$04                     ;set vertical speed of fireball
+         lda #$05                     ;PAL diff: Faster vertical speed to compensate FPS difference
          sta Fireball_Y_Speed,x
          lda #$07
          sta Fireball_BoundBoxCtrl,x  ;set bounding box size control for fireball
@@ -4553,9 +4553,9 @@ RunFB:   txa                          ;add 7 to offset to use
          clc                          ;as fireball offset for next routines
          adc #$07
          tax
-         lda #$50                     ;set downward movement force here
+         lda #$60                     ;PAL diff: Faster acceleration to compensate FPS difference
          sta $00
-         lda #$03                     ;set maximum speed here
+         lda #$05                     ;PAL diff: Faster maximum speed to compensate FPS difference
          sta $02
          lda #$00
          jsr ImposeGravity            ;do sub here to impose gravity on fireball and move vertically
@@ -4655,7 +4655,7 @@ RunGameTimer:
            bne ResGTCtrl              ;if timer not at 100, branch to reset game timer control
            lda #TimeRunningOutMusic
            sta EventMusicQueue        ;otherwise load time running out music
-ResGTCtrl: lda #$18                   ;reset game timer control
+ResGTCtrl: lda #$14                   ;PAL diff: Game timer ticks every 20 frames (vs. 24 frames on NTSC)
            sta GameTimerCtrlTimer
            ldy #$17                   ;set offset for last digit
            lda #$ff                   ;set value to decrement game timer digit
@@ -4856,7 +4856,7 @@ PosJSpr:   lda Jumpspring_FixedYPos,x  ;get permanent vertical position
            bne BounceJS                ;skip to next part if so
            tya
            pha
-           lda #$f4                    ;set jumpspring force for red jumpsprings
+           lda #$f2                    ;PAL diff: Faster speed to compensate FPS difference
            ldy WorldNumber
            cpy #World2
            beq GreenJS                 ;if world number is 2, 3 or 7
@@ -4872,6 +4872,8 @@ BounceJS:  cpy #$03                    ;check frame control offset again
            bne DrawJSpr                ;skip to last part if not yet at fifth frame ($03)
            lda JumpspringForce
            sta Player_Y_Speed          ;store jumpspring force as player's new vertical speed
+           lda #$40                    ;PAL bugfix: Define vertical acceleration on springs (was undefined on NTSC)
+           sta VerticalForce
            lda #$00
            sta JumpspringAnimCtrl      ;initialize jumpspring frame control
 DrawJSpr:  jsr RelativeEnemyPosition   ;get jumpspring's relative coordinates
@@ -5068,7 +5070,7 @@ ExCannon: rts                        ;then leave
 ;--------------------------------
 
 BulletBillXSpdData:
-      .db $18, $e8
+      .db $1c, $e4                   ;PAL diff: Faster speed to compensate FPS difference
 
 BulletBillHandler:
            lda TimerControl          ;if master timer control set,
@@ -5093,7 +5095,7 @@ SetupBB:   sty Enemy_MovingDir,x     ;set bullet bill's moving direction
            bcc KillBB                ;to cannon either on left or right side, thus branch
            lda #$01
            sta Enemy_State,x         ;otherwise set bullet bill's state
-           lda #$0a
+           lda #$09                  ;PAL diff: Faster timer to compensate FPS difference
            sta EnemyFrameTimer,x     ;set enemy frame timer
            lda #Sfx_Blast
            sta Square2SoundQueue     ;play fireworks/gunfire sound
@@ -5117,7 +5119,7 @@ HammerEnemyOfsData:
       .db $06, $06, $06
 
 HammerXSpdData:
-      .db $10, $f0
+      .db $14, $ec                 ;PAL diff: Faster speed to compensate FPS difference
 
 SpawnHammerObj:
           lda PseudoRandomBitReg+1 ;get a pseudorandom number from 0 to 8
@@ -5162,7 +5164,7 @@ ProcHammerObj:
           clc                        ;add 13 bytes to use
           adc #$0d                   ;proper misc object
           tax                        ;return offset to X
-          lda #$10
+          lda #$23                   ;PAL diff: Faster acceleration to compensate FPS difference
           sta $00                    ;set downward movement force
           lda #$0f
           sta $01                    ;set upward movement force (not used)
@@ -5173,7 +5175,7 @@ ProcHammerObj:
           jsr MoveObjectHorizontally ;do sub to move it horizontally
           ldx ObjectOffset           ;get original misc object offset
           jmp RunAllH                ;branch to essential subroutines
-SetHSpd:  lda #$fe
+SetHSpd:  lda #$fd                   ;PAL diff: Faster speed to compensate FPS difference
           sta Misc_Y_Speed,x         ;set hammer's vertical speed
           lda Enemy_State,y          ;get enemy object state
           and #%11110111             ;mask out d3
@@ -5500,7 +5502,7 @@ PutMTileB: sta Block_Metatile,x     ;store whatever metatile be appropriate here
            ldy $02                  ;get vertical high nybble offset
            lda #$20
            sta ($06),y              ;write blank metatile $20 to block buffer
-           lda #$10
+           lda #$0c                 ;PAL diff: Faster timer to compensate FPS difference
            sta BlockBounceTimer     ;set block bounce timer
            pla                      ;pull original metatile from stack
            sta $05                  ;and save here
@@ -5836,7 +5838,7 @@ MovePlayerVertically:
          bne ExXMove             ;branch to leave if so
 NoJSChk: lda VerticalForce       ;dump vertical force 
          sta $00
-         lda #$04                ;set maximum vertical speed here
+         lda #$05                ;PAL diff: Faster maximum vertical speed to compensate FPS difference
          jmp ImposeGravitySprObj ;then jump to move player vertically
 
 ;--------------------------------
@@ -5878,15 +5880,15 @@ MoveDropPlatform:
       bne SetMdMax  ;skip ahead of other value set here
 
 MoveEnemySlowVert:
-          ldy #$0f         ;set movement amount for bowser/other objects
+          ldy #$12         ;set movement amount for bowser/other objects;PAL diff: Faster speed to compensate FPS difference
 SetMdMax: lda #$02         ;set maximum speed in A
           bne SetXMoveAmt  ;unconditional branch
 
 ;--------------------------------
 
 MoveJ_EnemyVertically:
-             ldy #$1c                ;set movement amount for podoboo/other objects
-SetHiMax:    lda #$03                ;set maximum speed in A
+             ldy #$1f                ;set movement amount for podoboo/other objects;PAL diff: Faster speed to compensate FPS difference
+SetHiMax:    lda #$04                ;PAL diff: Faster maximum speed to compensate FPS difference
 SetXMoveAmt: sty $00                 ;set movement amount here
              inx                     ;increment X for enemy offset
              jsr ImposeGravitySprObj ;do a sub to move enemy object downwards
@@ -5904,7 +5906,7 @@ ResidualGravityCode:
 
 ImposeGravityBlock:
       ldy #$01       ;set offset for maximum speed
-      lda #$50       ;set movement amount here
+      lda #$58       ;set movement amount here;PAL diff: Faster speed to compensate FPS difference
       sta $00
       lda MaxSpdBlockData,y    ;get maximum speed
 
@@ -6397,7 +6399,7 @@ InitRetainerObj:
       rts
 
 NormalXSpdData:
-      .db $f8, $f4
+      .db $f6, $f1             ;PAL diff: Faster speed to compensate FPS difference
 
 InitNormalEnemy:
          ldy #$01              ;load offset of 1 by default
@@ -6569,7 +6571,7 @@ DifLoop:  lda PRDiffAdjustData,y     ;get three values and save them
           ldx ObjectOffset           ;get enemy object buffer offset
           jsr PlayerLakituDiff       ;move enemy, change direction, get value - difference
           ldy Player_X_Speed         ;check player's horizontal speed
-          cpy #$08
+          cpy #$0c                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
           bcs SetSpSpd               ;if moving faster than a certain amount, branch elsewhere
           tay                        ;otherwise save value in A to Y for now
           lda PseudoRandomBitReg+1,x
@@ -6598,7 +6600,7 @@ ChpChpEx: rts
 ;--------------------------------
 
 FirebarSpinSpdData:
-      .db $28, $38, $28, $38, $28
+      .db $30, $43, $30, $43, $30 ;PAL diff: Faster speed to compensate FPS difference
 
 FirebarSpinDirData:
       .db $00, $00, $10, $10, $00
@@ -6640,9 +6642,9 @@ FlyCCXPositionData:
       .db $70, $40, $90, $68
 
 FlyCCXSpeedData:
-      .db $0e, $05, $06, $0e
-      .db $1c, $20, $10, $0c
-      .db $1e, $22, $18, $14
+      .db $11, $07, $08, $0a        ;PAL diff: Faster speed to compensate FPS difference
+      .db $23, $28, $15, $10
+      .db $22, $2c, $1f, $1b
 
 FlyCCTimerData:
       .db $10, $60, $20, $48
@@ -6667,14 +6669,14 @@ MaxCC:   sty $00                    ;store whatever pseudorandom bits are in Y
          and #%00000011             ;get last two bits of LSFR, first part
          sta $00                    ;and store in two places
          sta $01
-         lda #$fb                   ;set vertical speed for cheep-cheep
+         lda #$fa                   ;PAL diff: Faster speed to compensate FPS difference
          sta Enemy_Y_Speed,x
          lda #$00                   ;load default value
          ldy Player_X_Speed         ;check player's horizontal speed
          beq GSeed                  ;if player not moving left or right, skip this part
          lda #$04
-         cpy #$19                   ;if moving to the right but not very quickly,
-         bcc GSeed                  ;do not change A
+         cpy #$1d                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
+         bcc GSeed                  ;if moving to the right but not very quickly, do not change A
          asl                        ;otherwise, multiply A by 2
 GSeed:   pha                        ;save to stack
          clc
@@ -7512,11 +7514,11 @@ HJump: lda HammerBroJumpLData,y    ;get jump length timer data using offset from
        sta HammerBroJumpTimer,x    ;store in jump timer
 
 MoveHammerBroXDir:
-         ldy #$fc                  ;move hammer bro a little to the left
+         ldy #$fb                  ;PAL diff: Faster speed to compensate FPS difference
          lda FrameCounter
          and #%01000000            ;change hammer bro's direction every 64 frames
          bne Shimmy
-         ldy #$04                  ;if d6 set in counter, move him a little to the right
+         ldy #$05                  ;PAL diff: Faster speed to compensate FPS difference
 Shimmy:  sty Enemy_X_Speed,x       ;store horizontal speed
          ldy #$01                  ;set to face right by default
          jsr PlayerEnemyDiff       ;get horizontal difference between player and hammer bro
@@ -7524,7 +7526,7 @@ Shimmy:  sty Enemy_X_Speed,x       ;store horizontal speed
          iny                       ;set to face left
          lda EnemyIntervalTimer,x  ;check walking timer
          bne SetShim               ;if not yet expired, skip to set moving direction
-         lda #$f8
+         lda #$f6                  ;PAL diff: Faster speed to compensate FPS difference
          sta Enemy_X_Speed,x       ;otherwise, make the hammer bro walk left towards player
 SetShim: sty Enemy_MovingDir,x     ;set moving direction
 
@@ -7596,8 +7598,8 @@ MoveDefeatedEnemy:
       jmp MoveEnemyHorizontally      ;now move defeated enemy horizontally
 
 ChkKillGoomba:
-        cmp #$0e              ;check to see if enemy timer has reached
-        bne NKGmba            ;a certain point, and branch to leave if not
+        cmp #$0b              ;PAL diff: Faster timer to compensate FPS difference
+        bne NKGmba            ;check to see if enemy timer has reached a certain point, and branch to leave if not
         lda Enemy_ID,x
         cmp #Goomba           ;check for goomba object
         bne NKGmba            ;branch if not found
@@ -7702,7 +7704,7 @@ XMRight: sty Enemy_MovingDir,x        ;store as moving direction
 
 
 BlooberBitmasks:
-      .db %00111111, %00000011
+      .db %00000111, %00000001     ;PAL diff: Faster swim to compensate FPS difference
 
 MoveBloober:
         lda Enemy_State,x
@@ -7805,7 +7807,7 @@ NoFD: rts                     ;leave
 
 ChkNearPlayer:
       lda Enemy_Y_Position,x    ;get vertical coordinate
-      adc #$10                  ;add sixteen pixels
+      adc #$0c                  ;PAL bugfix: Bloopers can get closer vertically
       cmp Player_Y_Position     ;compare result with player's vertical coordinate
       bcc Floatdown             ;if modified vertical less than player's, branch
       lda #$00
@@ -8152,50 +8154,15 @@ GetVAdder: sta $02                    ;store result here
 
 ;--------------------------------
 
-PRandomSubtracter:
-      .db $f8, $a0, $70, $bd, $00
-
-FlyCCBPriority:
-      .db $20, $20, $20, $00, $00
-
-MoveFlyingCheepCheep:
-        lda Enemy_State,x          ;check cheep-cheep's enemy state
-        and #%00100000             ;for d5 set
-        beq FlyCC                  ;branch to continue code if not set
-        lda #$00
-        sta Enemy_SprAttrib,x      ;otherwise clear sprite attributes
-        jmp MoveJ_EnemyVertically  ;and jump to move defeated cheep-cheep downwards
-FlyCC:  jsr MoveEnemyHorizontally  ;move cheep-cheep horizontally based on speed and force
-        ldy #$0d                   ;set vertical movement amount
-        lda #$05                   ;set maximum speed
-        jsr SetXMoveAmt            ;branch to impose gravity on flying cheep-cheep
-        lda Enemy_Y_MoveForce,x
-        lsr                        ;get vertical movement force and
-        lsr                        ;move high nybble to low
-        lsr
-        lsr
-        tay                        ;save as offset (note this tends to go into reach of code)
-        lda Enemy_Y_Position,x     ;get vertical position
-        sec                        ;subtract pseudorandom value based on offset from position
-        sbc PRandomSubtracter,y
-        bpl AddCCF                  ;if result within top half of screen, skip this part
-        eor #$ff
-        clc                        ;otherwise get two's compliment
-        adc #$01
-AddCCF: cmp #$08                   ;if result or two's compliment greater than eight,
-        bcs BPGet                  ;skip to the end without changing movement force
-        lda Enemy_Y_MoveForce,x
-        clc
-        adc #$10                   ;otherwise add to it
-        sta Enemy_Y_MoveForce,x
-        lsr                        ;move high nybble to low again
-        lsr
-        lsr
-        lsr
-        tay
-BPGet:  lda FlyCCBPriority,y       ;load bg priority data and store (this is very likely
-        sta Enemy_SprAttrib,x      ;broken or residual code, value is overwritten before
-        rts                        ;drawing it next frame), then leave
+MoveFlyingCheepCheep:             ;PAL diff: reworked movement function for Cheep Cheeps
+       ldy #$20
+       lda Enemy_State,x          ;check cheep-cheep's enemy state
+       and #%00100000             ;for d5 set
+       bne FlyCC
+       jsr MoveEnemyHorizontally
+       ldy #$17
+FlyCC: lda #$05
+       jmp SetXMoveAmt
 
 ;--------------------------------
 ;$00 - used to hold horizontal difference
@@ -8278,7 +8245,7 @@ ChkPSpeed: lda $00
            beq SubDifAdj              ;if scroll speed not set, branch to same place
            iny                        ;otherwise increment offset
            lda Player_X_Speed
-           cmp #$19                   ;if player not running, branch
+           cmp #$1d                   ;PAL diff: Faster speed cutoffs to compensate FPS difference
            bcc ChkSpinyO
            lda ScrollAmount
            cmp #$02                   ;if scroll speed below a certain amount, branch
@@ -8549,7 +8516,7 @@ ProcessBowserHalf:
 ;$01 - used to hold sprite attribute data
 
 FlameTimerData:
-      .db $bf, $40, $bf, $bf, $bf, $40, $40, $bf
+      .db $80, $30, $30, $80, $80, $80, $30, $50 ;PAL diff: Adjusted timing to compensate FPS difference
 
 SetFlameTimer:
       ldy BowserFlameTimerCtrl  ;load counter as offset
@@ -8563,10 +8530,10 @@ ExFl: rts
 ProcBowserFlame:
          lda TimerControl            ;if master timer control flag set,
          bne SetGfxF                 ;skip all of this
-         lda #$40                    ;load default movement force
+         lda #$70                    ;PAL diff: Faster acceleration to compensate FPS difference
          ldy SecondaryHardMode
          beq SFlmX                   ;if secondary hard mode flag not set, use default
-         lda #$60                    ;otherwise load alternate movement force to go faster
+         lda #$90                    ;PAL diff: Faster acceleration to compensate FPS difference
 SFlmX:   sta $00                     ;store value here
          lda Enemy_X_MoveForce,x
          sec                         ;subtract value from movement force
@@ -9215,7 +9182,7 @@ RightPlatform:
        sta $00                       ;store saved value here (residual code)
        lda PlatformCollisionFlag,x   ;check collision flag, if no collision between player
        bmi ExRPl                     ;and platform, branch ahead, leave speed unaltered
-       lda #$10
+       lda #$13                      ;PAL diff: Faster speed to compensate FPS difference
        sta Enemy_X_Speed,x           ;otherwise set new speed (gets moving if motionless)
        jsr PositionPlayerOnHPlat     ;use saved value from earlier sub to position player
 ExRPl: rts                           ;then leave
@@ -9546,7 +9513,7 @@ ResidualXSpdData:
       .db $18, $e8
 
 KickedShellXSpdData:
-      .db $30, $d0
+      .db $38, $c8                   ;PAL diff: Faster speed to compensate FPS difference
 
 DemotedKoopaXSpdData:
       .db $08, $f8
@@ -9640,12 +9607,12 @@ ChkForPlayerInjury:
           ldy Player_Y_Speed     ;check player's vertical speed
           dey                    ;branch elsewhere if player is not moving downwards
           bpl EnemyStomped
-ChkInj:   lda Enemy_ID,x         ;branch if enemy object < $07
-          cmp #Bloober
-          bcc ChkETmrs
-          lda Player_Y_Position  ;add 12 pixels to player's vertical position
-          clc
-          adc #$0c
+ChkInj:   lda #$14               ;PAL bugfix: Vertical difference deciding whether Mario stomped or got hit depends on the enemy
+          ldy Enemy_ID,x         ;branch if enemy object < $07
+          cpy #FlyingCheepCheep
+          bne ChkInj2
+          lda #$07
+ChkInj2:  adc Player_Y_Position
           cmp Enemy_Y_Position,x ;compare modified player's position to enemy's position
           bcc EnemyStomped       ;branch if this player's position above (less than) enemy's
 ChkETmrs: lda StompTimer         ;check stomp timer
@@ -9672,7 +9639,7 @@ ForceInjury:
           sta PlayerStatus          ;otherwise set player's status to small
           lda #$08
           sta InjuryTimer           ;set injured invincibility timer
-          asl
+          lda #$10                  ;PAL diff: set value explicitly (noop)
           sta Square1SoundQueue     ;play pipedown/injury sound
           jsr GetPlayerColors       ;change player's palette if necessary
           lda #$0a                  ;set subroutine to run on next frame
@@ -9757,7 +9724,7 @@ ChkForDemoteKoopa:
       rts
 
 RevivalRateData:
-      .db $10, $0b
+      .db $0d, $09             ;PAL diff: Faster timer to compensate FPS difference
 
 HandleStompedShellE:
        lda #$04                   ;set defeated state for enemy
@@ -10241,8 +10208,12 @@ SolidOrClimb:
        beq NYSpd              ;branch ahead and do not play sound
        lda #Sfx_Bump
        sta Square1SoundQueue  ;otherwise load bump sound
-NYSpd: lda #$01               ;set player's vertical speed to nullify
-       sta Player_Y_Speed     ;jump or swim
+NYSpd: ldy #$01               ;set player's vertical speed to nullify
+       lda AreaType           ;PAL diff: Set vertical speed to 0 in water stages
+       bne NYSpd2             ;not water
+       dey
+NYSpd2:
+       sty Player_Y_Speed    ;jump or swim
 
 DoFootCheck:
       ldy $eb                    ;get block buffer adder offset
@@ -10278,9 +10249,9 @@ ContChk:  jsr ChkInvisibleMTiles     ;do sub to check for hidden coin or 1-up bl
           beq DoPlayerSideCheck      ;if either found, branch
           ldy JumpspringAnimCtrl     ;if jumpspring animating right now,
           bne InitSteP               ;branch ahead
-          ldy $04                    ;check lower nybble of vertical coordinate returned
-          cpy #$05                   ;from collision detection routine
-          bcc LandPlyr               ;if lower nybble < 5, branch
+          ldy $04                    ;check lower nybble of vertical coordinate returned from collision detection routine
+          cpy #$06                   ;PAL diff: Floor is one pixel wider to accomodate for faster speeds
+          bcc LandPlyr               ;if lower nybble < 6, branch
           lda Player_MovingDir
           sta $00                    ;use player's moving direction as temp variable
           jmp ImpedePlayerMove       ;jump to impede player's movement in that direction
@@ -10389,7 +10360,7 @@ StopPlayerMove:
 ExCSM: rts                       ;leave
       
 AreaChangeTimerData:
-      .db $a0, $34
+      .db $85, $2b          ;PAL diff: Faster timer to accomodate FPS difference
 
 HandleCoinMetatile:
       jsr ErACM             ;do sub to erase coin metatile from block buffer
@@ -10534,7 +10505,7 @@ ChkForLandJumpSpring:
         lda #$70
         sta VerticalForce           ;otherwise set vertical movement force for player
         sta VerticalForceDown
-        lda #$f9
+        lda #$f8                    ;PAL diff: Faster acceleration to accomodate FPS difference
         sta JumpspringForce         ;set default jumpspring force
         lda #$03
         sta JumpspringTimer         ;set jumpspring timer to be used later
@@ -10561,7 +10532,7 @@ HandlePipeEntry:
           lda $01
           cmp #$10                  ;check left foot metatile for warp pipe left metatile
           bne ExPipeE               ;branch to leave if not found
-          lda #$30
+          lda #$28                  ;PAL diff: Faster timer to accomodate FPS difference
           sta ChangeAreaTimer       ;set timer for change of area
           lda #$03
           sta GameEngineSubroutine  ;set to run vertical pipe entry routine on next frame
@@ -11063,7 +11034,7 @@ BoundBoxCtrlData:
       .db $00, $00, $30, $0d
       .db $00, $00, $08, $08
       .db $06, $04, $0a, $08
-      .db $03, $0e, $0d, $16
+      .db $03, $0c, $0d, $14 ;PAL diff: some enemies (Piranha, Bullet Bill, Goomba, Spiny, Blooper, Cheep Cheep) has larger hitbox
       .db $00, $02, $10, $15
       .db $04, $04, $0c, $1c
 
@@ -12924,7 +12895,7 @@ ProcOnGroundActs:
          ora Left_Right_Buttons     ;and left/right controller bits
          beq NonAnimatedActs        ;if no speed or buttons pressed, use standing offset
          lda Player_XSpeedAbsolute  ;load walking/running speed
-         cmp #$09
+         cmp #$0a                   ;PAL diff: Faster speed cutoff to accomodate FPS difference
          bcc ActionWalkRun          ;if less than a certain amount, branch, too slow to skid
          lda Player_MovingDir       ;otherwise check to see if moving direction
          and PlayerFacingDir        ;and facing direction are the same
@@ -13638,8 +13609,8 @@ DemoActionData:
   .db $00
 
 DemoTimingData:
-  .db $b0, $10, $10, $10, $28, $10, $28, $06
-  .db $10, $10, $0c, $80, $10, $28, $08, $90
+  .db $90, $10, $10, $10, $18, $10, $1c, $05 ;PAL diff: Demo timing decreased to compensate FPS difference
+  .db $10, $10, $0c, $80, $10, $18, $08, $90
   .db $ff, $00
 
 DemoEngine:

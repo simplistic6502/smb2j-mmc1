@@ -337,7 +337,7 @@ ContinueCGrabTTick:
         lda Squ2_SfxLenCounter  ;check for time to play second tone yet
         cmp #$30                ;timer tick sound also executes this, not sure why
         bne N2Tone
-        lda #$54                ;if so, load the tone directly into the reg
+        lda #$4e                ;PAL diff: Play different sound
         sta SND_SQUARE2_REG+2
 N2Tone: bne DecrementSfx2Length
 
@@ -1039,7 +1039,7 @@ MusicHeaderData:
 TimeRunningOutHdr:     .db $08, <TimeRunOutMusData, >TimeRunOutMusData, $27, $18
 Star_CloudHdr:         .db $20, <Star_CloudMData, >Star_CloudMData, $2e, $1a, $40
 EndOfLevelMusHdr:      .db $20, <WinLevelMusData, >WinLevelMusData, $3d, $21
-ResidualHeaderData:    .db $20, $fb, $dc, $3f, $1d
+ResidualHeaderData:    .db $20, $fc, $dc, $3f, $1d ;PAL diff: Different data
 UndergroundMusHdr:     .db $18, <UndergroundMusData, >UndergroundMusData, $00, $00
 SilenceHdr:            .db $08, <SilenceData, >SilenceData, $00
 CastleMusHdr:          .db $00, <CastleMusData, >CastleMusData, $93, $62
@@ -1406,28 +1406,28 @@ VictoryM_P2DData:
 ;noise of part 2D
     .db $11, $11, $d0, $d0, $d0, $11, $00
 
-FreqRegLookupTbl:
-      .db $00, $88, $00, $2f, $00, $00
-      .db $02, $a6, $02, $80, $02, $5c, $02, $3a
-      .db $02, $1a, $01, $df, $01, $c4, $01, $ab
-      .db $01, $93, $01, $7c, $01, $67, $01, $53
-      .db $01, $40, $01, $2e, $01, $1d, $01, $0d
-      .db $00, $fe, $00, $ef, $00, $e2, $00, $d5
-      .db $00, $c9, $00, $be, $00, $b3, $00, $a9
-      .db $00, $a0, $00, $97, $00, $8e, $00, $86
-      .db $00, $77, $00, $7e, $00, $71, $00, $54
-      .db $00, $64, $00, $5f, $00, $59, $00, $50
-      .db $00, $47, $00, $43, $00, $3b, $00, $35
-      .db $00, $2a, $00, $23, $04, $75, $03, $57
-      .db $02, $f9, $02, $cf, $01, $fc, $00, $6a
+FreqRegLookupTbl: ;PAL diff: Different frequencies to accomodate clock speed differences
+      .db $00, $88, $00, $2b, $00, $00
+      .db $02, $72, $02, $4f, $02, $2e, $02, $0e
+      .db $01, $f1, $01, $ba, $01, $a1, $01, $8a
+      .db $01, $74, $01, $5F, $01, $4B, $01, $39
+      .db $01, $27, $01, $17, $01, $07, $00, $F8
+      .db $00, $EA, $00, $DD, $00, $D1, $00, $C5
+      .db $00, $BA, $00, $AF, $00, $A5, $00, $9C
+      .db $00, $94, $00, $8B, $00, $83, $00, $7C
+      .db $00, $6E, $00, $74, $00, $68, $00, $4E
+      .db $00, $5C, $00, $58, $00, $52, $00, $4A
+      .db $00, $42, $00, $3E, $00, $36, $00, $31
+      .db $00, $27, $00, $20, $04, $1D, $03, $15
+      .db $02, $BE, $02, $98, $01, $D5, $00, $62
 
-MusicLengthLookupTbl:
-      .db $05, $0a, $14, $28, $50, $1e, $3c, $02
-      .db $04, $08, $10, $20, $40, $18, $30, $0c
-      .db $03, $06, $0c, $18, $30, $12, $24, $08
-      .db $36, $03, $09, $06, $12, $1b, $24, $0c
-      .db $24, $02, $06, $04, $0c, $12, $18, $08
-      .db $12, $01, $03, $02, $06, $09, $0c, $04
+MusicLengthLookupTbl: ;PAL diff: Different lengths to accomodate speed differences
+      .db $04, $08, $10, $20, $40, $18, $30, $0C
+      .db $03, $06, $0C, $18, $30, $12, $24, $08
+      .db $03, $06, $0C, $18, $30, $12, $24, $08
+      .db $24, $02, $06, $04, $0C, $12, $18, $08
+      .db $1B, $01, $05, $03, $09, $0D, $12, $06
+      .db $12, $01, $03, $02, $06, $09, $0C, $04
       .db $24, $12, $0d, $09, $1b, $28, $36, $12 ;these two used in victory music only
       .db $24, $12, $0d, $09, $1b, $28, $36, $6c
 
