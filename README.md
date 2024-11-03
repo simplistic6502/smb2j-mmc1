@@ -16,6 +16,6 @@ The source code compiles with asm6, provided in the repo. If using Windows, the 
 
 ## Credits
 
-- SeraphmIII - commissioned me to develop this port
+- web2000 - commissioned me to develop this port
 - threecreepio - independent SMB2J port used as reference for level banking code and other various routines
 - pellsson - independent SMB2J port used as reference for NMI code
