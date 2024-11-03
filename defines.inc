@@ -669,3 +669,5 @@ SoundBank             = 0
 LevelsBank            = 1
 MainBank              = 2
 FixedBank             = 3
+
+PrincessGfxOffset     = $0760
