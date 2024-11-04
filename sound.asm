@@ -126,8 +126,8 @@ SetFreq_Tri:
 ;--------------------------------
 
 SwimStompEnvelopeData:
-      .db $9f, $9b, $98, $96, $95, $94, $92, $90
-      .db $90, $9a, $97, $95, $93, $92
+      .byte $9f, $9b, $98, $96, $95, $94, $92, $90
+      .byte $90, $9a, $97, $95, $93, $92
 
 PlayFlagpoleSlide:
        lda #$40               ;store length of flagpole sound
@@ -302,21 +302,21 @@ NoPDwnL: jmp DecrementSfx1Length
 ;--------------------------------
 
 ExtraLifeFreqData:
-      .db $58, $02, $54, $56, $4e, $44
+      .byte $58, $02, $54, $56, $4e, $44
 
 PowerUpGrabFreqData:
-      .db $4c, $52, $4c, $48, $3e, $36, $3e, $36, $30
-      .db $28, $4a, $50, $4a, $64, $3c, $32, $3c, $32
-      .db $2c, $24, $3a, $64, $3a, $34, $2c, $22, $2c
+      .byte $4c, $52, $4c, $48, $3e, $36, $3e, $36, $30
+      .byte $28, $4a, $50, $4a, $64, $3c, $32, $3c, $32
+      .byte $2c, $24, $3a, $64, $3a, $34, $2c, $22, $2c
 
 ;residual frequency data
-      .db $22, $1c, $14
+      .byte $22, $1c, $14
 
 PUp_VGrow_FreqData:
-      .db $14, $04, $22, $24, $16, $04, $24, $26 ;used by both
-      .db $18, $04, $26, $28, $1a, $04, $28, $2a
-      .db $1c, $04, $2a, $2c, $1e, $04, $2c, $2e ;used by vinegrow
-      .db $20, $04, $2e, $30, $22, $04, $30, $32
+      .byte $14, $04, $22, $24, $16, $04, $24, $26 ;used by both
+      .byte $18, $04, $26, $28, $1a, $04, $28, $2a
+      .byte $1c, $04, $2a, $2c, $1e, $04, $2c, $2e ;used by vinegrow
+      .byte $20, $04, $2e, $30, $22, $04, $30, $32
 
 PlayCoinGrab:
         lda #$35             ;load length of coin grab sound
@@ -500,16 +500,16 @@ StopGrowItems:
         jmp EmptySfx2Buffer       ;branch to stop playing sounds
 
 WindFreqEnvData:
-        .db $37, $46, $55, $64, $74, $83, $93, $a2
-        .db $b1, $c0, $d0, $e0, $f1, $f1, $f2, $e2
-        .db $e2, $c3, $a3, $84, $64, $44, $35, $25
+        .byte $37, $46, $55, $64, $74, $83, $93, $a2
+        .byte $b1, $c0, $d0, $e0, $f1, $f1, $f2, $e2
+        .byte $e2, $c3, $a3, $84, $64, $44, $35, $25
 
 BrickShatterFreqData:
-        .db $01, $0e, $0e, $0d, $0b, $06, $0c, $0f
-        .db $0a, $09, $03, $0d, $08, $0d, $06, $0c
+        .byte $01, $0e, $0e, $0d, $0b, $06, $0c, $0f
+        .byte $0a, $09, $03, $0d, $08, $0d, $06, $0c
 
 SkidSfxFreqData:
-        .db $47, $49, $42, $4a, $43, $4b
+        .byte $47, $49, $42, $4a, $43, $4b
 
 PlaySkidSfx:
         sty NoiseSoundBuffer
@@ -995,38 +995,38 @@ LoadWaterEventMusEnvData:
         rts
 
 MusicHeaderData:
-  .db DeathMusHdr-MHD
-  .db GameOverMusHdr-MHD
-  .db VictoryPart1AHdr-MHD
-  .db WinCastleMusHdr-MHD
-  .db GameOverMusHdr-MHD
-  .db EndOfLevelMusHdr-MHD
-  .db TimeRunningOutHdr-MHD
-  .db SilenceHdr-MHD
+  .byte DeathMusHdr-MHD
+  .byte GameOverMusHdr-MHD
+  .byte VictoryPart1AHdr-MHD
+  .byte WinCastleMusHdr-MHD
+  .byte GameOverMusHdr-MHD
+  .byte EndOfLevelMusHdr-MHD
+  .byte TimeRunningOutHdr-MHD
+  .byte SilenceHdr-MHD
 
-  .db GroundLevelPart1Hdr-MHD   ;area music
-  .db WaterMusHdr-MHD
-  .db UndergroundMusHdr-MHD
-  .db CastleMusHdr-MHD
-  .db Star_CloudHdr-MHD
-  .db GroundLevelLeadInHdr-MHD
-  .db Star_CloudHdr-MHD
-  .db SilenceHdr-MHD
+  .byte GroundLevelPart1Hdr-MHD   ;area music
+  .byte WaterMusHdr-MHD
+  .byte UndergroundMusHdr-MHD
+  .byte CastleMusHdr-MHD
+  .byte Star_CloudHdr-MHD
+  .byte GroundLevelLeadInHdr-MHD
+  .byte Star_CloudHdr-MHD
+  .byte SilenceHdr-MHD
 
-  .db GroundLevelLeadInHdr-MHD  ;ground level music layout
-  .db GroundLevelPart1Hdr-MHD, GroundLevelPart1Hdr-MHD
-  .db GroundLevelPart2AHdr-MHD, GroundLevelPart2BHdr-MHD, GroundLevelPart2AHdr-MHD, GroundLevelPart2CHdr-MHD
-  .db GroundLevelPart2AHdr-MHD, GroundLevelPart2BHdr-MHD, GroundLevelPart2AHdr-MHD, GroundLevelPart2CHdr-MHD
-  .db GroundLevelPart3AHdr-MHD, GroundLevelPart3BHdr-MHD, GroundLevelPart3AHdr-MHD, GroundLevelLeadInHdr-MHD
-  .db GroundLevelPart1Hdr-MHD, GroundLevelPart1Hdr-MHD
-  .db GroundLevelPart4AHdr-MHD, GroundLevelPart4BHdr-MHD, GroundLevelPart4AHdr-MHD, GroundLevelPart4CHdr-MHD
-  .db GroundLevelPart4AHdr-MHD, GroundLevelPart4BHdr-MHD, GroundLevelPart4AHdr-MHD, GroundLevelPart4CHdr-MHD
-  .db GroundLevelPart3AHdr-MHD, GroundLevelPart3BHdr-MHD, GroundLevelPart3AHdr-MHD, GroundLevelLeadInHdr-MHD
-  .db GroundLevelPart4AHdr-MHD, GroundLevelPart4BHdr-MHD, GroundLevelPart4AHdr-MHD, GroundLevelPart4CHdr-MHD
+  .byte GroundLevelLeadInHdr-MHD  ;ground level music layout
+  .byte GroundLevelPart1Hdr-MHD, GroundLevelPart1Hdr-MHD
+  .byte GroundLevelPart2AHdr-MHD, GroundLevelPart2BHdr-MHD, GroundLevelPart2AHdr-MHD, GroundLevelPart2CHdr-MHD
+  .byte GroundLevelPart2AHdr-MHD, GroundLevelPart2BHdr-MHD, GroundLevelPart2AHdr-MHD, GroundLevelPart2CHdr-MHD
+  .byte GroundLevelPart3AHdr-MHD, GroundLevelPart3BHdr-MHD, GroundLevelPart3AHdr-MHD, GroundLevelLeadInHdr-MHD
+  .byte GroundLevelPart1Hdr-MHD, GroundLevelPart1Hdr-MHD
+  .byte GroundLevelPart4AHdr-MHD, GroundLevelPart4BHdr-MHD, GroundLevelPart4AHdr-MHD, GroundLevelPart4CHdr-MHD
+  .byte GroundLevelPart4AHdr-MHD, GroundLevelPart4BHdr-MHD, GroundLevelPart4AHdr-MHD, GroundLevelPart4CHdr-MHD
+  .byte GroundLevelPart3AHdr-MHD, GroundLevelPart3BHdr-MHD, GroundLevelPart3AHdr-MHD, GroundLevelLeadInHdr-MHD
+  .byte GroundLevelPart4AHdr-MHD, GroundLevelPart4BHdr-MHD, GroundLevelPart4AHdr-MHD, GroundLevelPart4CHdr-MHD
 
-  .db VictoryPart1AHdr-MHD, VictoryPart1AHdr-MHD, VictoryPart1BHdr-MHD, VictoryPart1AHdr-MHD ;victory music layout
-  .db VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD
-  .db VictoryPart2CHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2DHdr-MHD
+  .byte VictoryPart1AHdr-MHD, VictoryPart1AHdr-MHD, VictoryPart1BHdr-MHD, VictoryPart1AHdr-MHD ;victory music layout
+  .byte VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD
+  .byte VictoryPart2CHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2DHdr-MHD
 
 ;music headers
 ;header format is as follows: 
@@ -1036,33 +1036,33 @@ MusicHeaderData:
 ;1 byte - square 1 data offset
 ;1 byte - noise data offset (not used by secondary music)
   
-TimeRunningOutHdr:     .db $08, <TimeRunOutMusData, >TimeRunOutMusData, $27, $18
-Star_CloudHdr:         .db $20, <Star_CloudMData, >Star_CloudMData, $2e, $1a, $40
-EndOfLevelMusHdr:      .db $20, <WinLevelMusData, >WinLevelMusData, $3d, $21
-ResidualHeaderData:    .db $20, $fc, $dc, $3f, $1d ;PAL diff: Different data
-UndergroundMusHdr:     .db $18, <UndergroundMusData, >UndergroundMusData, $00, $00
-SilenceHdr:            .db $08, <SilenceData, >SilenceData, $00
-CastleMusHdr:          .db $00, <CastleMusData, >CastleMusData, $93, $62
-VictoryPart1AHdr:      .db $30, <VictoryM_P1AData, >VictoryM_P1AData, $24, $14, $77
-VictoryPart1BHdr:      .db $30, <VictoryM_P1BData, >VictoryM_P1BData, $31, $21, $42
-VictoryPart2AHdr:      .db $30, <VictoryM_P2AData, >VictoryM_P2AData, $29, $1c, $7c
-VictoryPart2CHdr:      .db $30, <VictoryM_P2CData, >VictoryM_P2CData, $31, $20, $42
-VictoryPart2DHdr:      .db $38, <VictoryM_P2DData, >VictoryM_P2DData, $06, $04, $1b
-VictoryPart2BHdr:      .db $38, <VictoryM_P2BData, >VictoryM_P2BData, $20, $10, $65
-GameOverMusHdr:        .db $18, <GameOverMusData, >GameOverMusData, $1e, $14
-WaterMusHdr:           .db $08, <WaterMusData, >WaterMusData, $a0, $70, $68
-WinCastleMusHdr:       .db $08, <EndOfCastleMusData, >EndOfCastleMusData, $4c, $24
-GroundLevelPart1Hdr:   .db $18, <GroundM_P1Data, >GroundM_P1Data, $2d, $1c, $b8
-GroundLevelPart2AHdr:  .db $18, <GroundM_P2AData, >GroundM_P2AData, $20, $12, $70
-GroundLevelPart2BHdr:  .db $18, <GroundM_P2BData, >GroundM_P2BData, $1b, $10, $44
-GroundLevelPart2CHdr:  .db $18, <GroundM_P2CData, >GroundM_P2CData, $11, $0a, $1c
-GroundLevelPart3AHdr:  .db $18, <GroundM_P3AData, >GroundM_P3AData, $2d, $10, $58
-GroundLevelPart3BHdr:  .db $18, <GroundM_P3BData, >GroundM_P3BData, $14, $0d, $3f
-GroundLevelLeadInHdr:  .db $18, <GroundMLdInData, >GroundMLdInData, $15, $0d, $21
-GroundLevelPart4AHdr:  .db $18, <GroundM_P4AData, >GroundM_P4AData, $18, $10, $7a
-GroundLevelPart4BHdr:  .db $18, <GroundM_P4BData, >GroundM_P4BData, $19, $0f, $54
-GroundLevelPart4CHdr:  .db $18, <GroundM_P4CData, >GroundM_P4CData, $1e, $12, $2b
-DeathMusHdr:           .db $18, <DeathMusData, >DeathMusData, $1e, $0f, $2d
+TimeRunningOutHdr:     .byte $08, <TimeRunOutMusData, >TimeRunOutMusData, $27, $18
+Star_CloudHdr:         .byte $20, <Star_CloudMData, >Star_CloudMData, $2e, $1a, $40
+EndOfLevelMusHdr:      .byte $20, <WinLevelMusData, >WinLevelMusData, $3d, $21
+ResidualHeaderData:    .byte $20, $fc, $dc, $3f, $1d ;PAL diff: Different data
+UndergroundMusHdr:     .byte $18, <UndergroundMusData, >UndergroundMusData, $00, $00
+SilenceHdr:            .byte $08, <SilenceData, >SilenceData, $00
+CastleMusHdr:          .byte $00, <CastleMusData, >CastleMusData, $93, $62
+VictoryPart1AHdr:      .byte $30, <VictoryM_P1AData, >VictoryM_P1AData, $24, $14, $77
+VictoryPart1BHdr:      .byte $30, <VictoryM_P1BData, >VictoryM_P1BData, $31, $21, $42
+VictoryPart2AHdr:      .byte $30, <VictoryM_P2AData, >VictoryM_P2AData, $29, $1c, $7c
+VictoryPart2CHdr:      .byte $30, <VictoryM_P2CData, >VictoryM_P2CData, $31, $20, $42
+VictoryPart2DHdr:      .byte $38, <VictoryM_P2DData, >VictoryM_P2DData, $06, $04, $1b
+VictoryPart2BHdr:      .byte $38, <VictoryM_P2BData, >VictoryM_P2BData, $20, $10, $65
+GameOverMusHdr:        .byte $18, <GameOverMusData, >GameOverMusData, $1e, $14
+WaterMusHdr:           .byte $08, <WaterMusData, >WaterMusData, $a0, $70, $68
+WinCastleMusHdr:       .byte $08, <EndOfCastleMusData, >EndOfCastleMusData, $4c, $24
+GroundLevelPart1Hdr:   .byte $18, <GroundM_P1Data, >GroundM_P1Data, $2d, $1c, $b8
+GroundLevelPart2AHdr:  .byte $18, <GroundM_P2AData, >GroundM_P2AData, $20, $12, $70
+GroundLevelPart2BHdr:  .byte $18, <GroundM_P2BData, >GroundM_P2BData, $1b, $10, $44
+GroundLevelPart2CHdr:  .byte $18, <GroundM_P2CData, >GroundM_P2CData, $11, $0a, $1c
+GroundLevelPart3AHdr:  .byte $18, <GroundM_P3AData, >GroundM_P3AData, $2d, $10, $58
+GroundLevelPart3BHdr:  .byte $18, <GroundM_P3BData, >GroundM_P3BData, $14, $0d, $3f
+GroundLevelLeadInHdr:  .byte $18, <GroundMLdInData, >GroundMLdInData, $15, $0d, $21
+GroundLevelPart4AHdr:  .byte $18, <GroundM_P4AData, >GroundM_P4AData, $18, $10, $7a
+GroundLevelPart4BHdr:  .byte $18, <GroundM_P4BData, >GroundM_P4BData, $19, $0f, $54
+GroundLevelPart4CHdr:  .byte $18, <GroundM_P4CData, >GroundM_P4CData, $1e, $12, $2b
+DeathMusHdr:           .byte $18, <DeathMusData, >DeathMusData, $1e, $0f, $2d
 
 ;--------------------------------
 
@@ -1092,371 +1092,371 @@ DeathMusHdr:           .db $18, <DeathMusData, >DeathMusData, $1e, $0f, $2d
 ;square 2, square 1, triangle, noise
 
 Star_CloudMData:
-      .db $84, $2c, $2c, $2c, $82, $04, $2c, $04, $85, $2c, $84, $2c, $2c
-      .db $2a, $2a, $2a, $82, $04, $2a, $04, $85, $2a, $84, $2a, $2a, $00
+      .byte $84, $2c, $2c, $2c, $82, $04, $2c, $04, $85, $2c, $84, $2c, $2c
+      .byte $2a, $2a, $2a, $82, $04, $2a, $04, $85, $2a, $84, $2a, $2a, $00
 
-      .db $1f, $1f, $1f, $98, $1f, $1f, $98, $9e, $98, $1f
-      .db $1d, $1d, $1d, $94, $1d, $1d, $94, $9c, $94, $1d
+      .byte $1f, $1f, $1f, $98, $1f, $1f, $98, $9e, $98, $1f
+      .byte $1d, $1d, $1d, $94, $1d, $1d, $94, $9c, $94, $1d
 
-      .db $86, $18, $85, $26, $30, $84, $04, $26, $30
-      .db $86, $14, $85, $22, $2c, $84, $04, $22, $2c
+      .byte $86, $18, $85, $26, $30, $84, $04, $26, $30
+      .byte $86, $14, $85, $22, $2c, $84, $04, $22, $2c
 
-      .db $21, $d0, $c4, $d0, $31, $d0, $c4, $d0, $00
+      .byte $21, $d0, $c4, $d0, $31, $d0, $c4, $d0, $00
 
 GroundM_P1Data:
-      .db $85, $2c, $22, $1c, $84, $26, $2a, $82, $28, $26, $04
-      .db $87, $22, $34, $3a, $82, $40, $04, $36, $84, $3a, $34
-      .db $82, $2c, $30, $85, $2a
+      .byte $85, $2c, $22, $1c, $84, $26, $2a, $82, $28, $26, $04
+      .byte $87, $22, $34, $3a, $82, $40, $04, $36, $84, $3a, $34
+      .byte $82, $2c, $30, $85, $2a
 
 SilenceData:
-      .db $00
+      .byte $00
 
-      .db $5d, $55, $4d, $15, $19, $96, $15, $d5, $e3, $eb
-      .db $2d, $a6, $2b, $27, $9c, $9e, $59
+      .byte $5d, $55, $4d, $15, $19, $96, $15, $d5, $e3, $eb
+      .byte $2d, $a6, $2b, $27, $9c, $9e, $59
 
-      .db $85, $22, $1c, $14, $84, $1e, $22, $82, $20, $1e, $04, $87
-      .db $1c, $2c, $34, $82, $36, $04, $30, $34, $04, $2c, $04, $26
-      .db $2a, $85, $22
+      .byte $85, $22, $1c, $14, $84, $1e, $22, $82, $20, $1e, $04, $87
+      .byte $1c, $2c, $34, $82, $36, $04, $30, $34, $04, $2c, $04, $26
+      .byte $2a, $85, $22
 
 GroundM_P2AData:
-      .db $84, $04, $82, $3a, $38, $36, $32, $04, $34
-      .db $04, $24, $26, $2c, $04, $26, $2c, $30, $00
+      .byte $84, $04, $82, $3a, $38, $36, $32, $04, $34
+      .byte $04, $24, $26, $2c, $04, $26, $2c, $30, $00
 
-      .db $05, $b4, $b2, $b0, $2b, $ac, $84
-      .db $9c, $9e, $a2, $84, $94, $9c, $9e
+      .byte $05, $b4, $b2, $b0, $2b, $ac, $84
+      .byte $9c, $9e, $a2, $84, $94, $9c, $9e
 
-      .db $85, $14, $22, $84, $2c, $85, $1e
-      .db $82, $2c, $84, $2c, $1e
+      .byte $85, $14, $22, $84, $2c, $85, $1e
+      .byte $82, $2c, $84, $2c, $1e
 
 GroundM_P2BData:
-      .db $84, $04, $82, $3a, $38, $36, $32, $04, $34
-      .db $04, $64, $04, $64, $86, $64, $00
+      .byte $84, $04, $82, $3a, $38, $36, $32, $04, $34
+      .byte $04, $64, $04, $64, $86, $64, $00
 
-      .db $05, $b4, $b2, $b0, $2b, $ac, $84
-      .db $37, $b6, $b6, $45
+      .byte $05, $b4, $b2, $b0, $2b, $ac, $84
+      .byte $37, $b6, $b6, $45
 
-      .db $85, $14, $1c, $82, $22, $84, $2c
-      .db $4e, $82, $4e, $84, $4e, $22
+      .byte $85, $14, $1c, $82, $22, $84, $2c
+      .byte $4e, $82, $4e, $84, $4e, $22
 
 GroundM_P2CData:
-      .db $84, $04, $85, $32, $85, $30, $86, $2c, $04, $00
+      .byte $84, $04, $85, $32, $85, $30, $86, $2c, $04, $00
 
-      .db $05, $a4, $05, $9e, $05, $9d, $85
+      .byte $05, $a4, $05, $9e, $05, $9d, $85
       
-      .db $84, $14, $85, $24, $28, $2c, $82
-      .db $22, $84, $22, $14
+      .byte $84, $14, $85, $24, $28, $2c, $82
+      .byte $22, $84, $22, $14
 
-      .db $21, $d0, $c4, $d0, $31, $d0, $c4, $d0, $00
+      .byte $21, $d0, $c4, $d0, $31, $d0, $c4, $d0, $00
 
 GroundM_P3AData:
-      .db $82, $2c, $84, $2c, $2c, $82, $2c, $30
-      .db $04, $34, $2c, $04, $26, $86, $22, $00
+      .byte $82, $2c, $84, $2c, $2c, $82, $2c, $30
+      .byte $04, $34, $2c, $04, $26, $86, $22, $00
 
-      .db $a4, $25, $25, $a4, $29, $a2, $1d, $9c, $95
+      .byte $a4, $25, $25, $a4, $29, $a2, $1d, $9c, $95
 
 GroundM_P3BData:
-      .db $82, $2c, $2c, $04, $2c, $04, $2c, $30, $85, $34, $04, $04, $00
+      .byte $82, $2c, $2c, $04, $2c, $04, $2c, $30, $85, $34, $04, $04, $00
 
-      .db $a4, $25, $25, $a4, $a8, $63, $04
+      .byte $a4, $25, $25, $a4, $a8, $63, $04
 
 ;triangle data used by both sections of third part
-      .db $85, $0e, $1a, $84, $24, $85, $22, $14, $84, $0c
+      .byte $85, $0e, $1a, $84, $24, $85, $22, $14, $84, $0c
 
 GroundMLdInData:
-      .db $82, $34, $84, $34, $34, $82, $2c, $84, $34, $86, $3a, $04, $00
+      .byte $82, $34, $84, $34, $34, $82, $2c, $84, $34, $86, $3a, $04, $00
 
-      .db $a0, $21, $21, $a0, $21, $2b, $05, $a3
+      .byte $a0, $21, $21, $a0, $21, $2b, $05, $a3
 
-      .db $82, $18, $84, $18, $18, $82, $18, $18, $04, $86, $3a, $22
+      .byte $82, $18, $84, $18, $18, $82, $18, $18, $04, $86, $3a, $22
 
 ;noise data used by lead-in and third part sections
-      .db $31, $90, $31, $90, $31, $71, $31, $90, $90, $90, $00
+      .byte $31, $90, $31, $90, $31, $71, $31, $90, $90, $90, $00
 
 GroundM_P4AData:
-      .db $82, $34, $84, $2c, $85, $22, $84, $24
-      .db $82, $26, $36, $04, $36, $86, $26, $00
+      .byte $82, $34, $84, $2c, $85, $22, $84, $24
+      .byte $82, $26, $36, $04, $36, $86, $26, $00
 
-      .db $ac, $27, $5d, $1d, $9e, $2d, $ac, $9f
+      .byte $ac, $27, $5d, $1d, $9e, $2d, $ac, $9f
 
-      .db $85, $14, $82, $20, $84, $22, $2c
-      .db $1e, $1e, $82, $2c, $2c, $1e, $04
+      .byte $85, $14, $82, $20, $84, $22, $2c
+      .byte $1e, $1e, $82, $2c, $2c, $1e, $04
 
 GroundM_P4BData:
-      .db $87, $2a, $40, $40, $40, $3a, $36 
-      .db $82, $34, $2c, $04, $26, $86, $22, $00
+      .byte $87, $2a, $40, $40, $40, $3a, $36 
+      .byte $82, $34, $2c, $04, $26, $86, $22, $00
 
-      .db $e3, $f7, $f7, $f7, $f5, $f1, $ac, $27, $9e, $9d
+      .byte $e3, $f7, $f7, $f7, $f5, $f1, $ac, $27, $9e, $9d
 
-      .db $85, $18, $82, $1e, $84, $22, $2a
-      .db $22, $22, $82, $2c, $2c, $22, $04
+      .byte $85, $18, $82, $1e, $84, $22, $2a
+      .byte $22, $22, $82, $2c, $2c, $22, $04
 
 DeathMusData:
-      .db $86, $04 ;death music share data with fourth part c of ground level music 
+      .byte $86, $04 ;death music share data with fourth part c of ground level music 
 
 GroundM_P4CData:
-      .db $82, $2a, $36, $04, $36, $87, $36, $34, $30, $86, $2c, $04, $00
+      .byte $82, $2a, $36, $04, $36, $87, $36, $34, $30, $86, $2c, $04, $00
       
-      .db $00, $68, $6a, $6c, $45 ;death music only
+      .byte $00, $68, $6a, $6c, $45 ;death music only
 
-      .db $a2, $31, $b0, $f1, $ed, $eb, $a2, $1d, $9c, $95
+      .byte $a2, $31, $b0, $f1, $ed, $eb, $a2, $1d, $9c, $95
 
-      .db $86, $04 ;death music only
+      .byte $86, $04 ;death music only
 
-      .db $85, $22, $82, $22, $87, $22, $26, $2a, $84, $2c, $22, $86, $14
+      .byte $85, $22, $82, $22, $87, $22, $26, $2a, $84, $2c, $22, $86, $14
 
 ;noise data used by fourth part sections
-      .db $51, $90, $31, $11, $00
+      .byte $51, $90, $31, $11, $00
 
 CastleMusData:
-      .db $80, $22, $28, $22, $26, $22, $24, $22, $26
-      .db $22, $28, $22, $2a, $22, $28, $22, $26
-      .db $22, $28, $22, $26, $22, $24, $22, $26
-      .db $22, $28, $22, $2a, $22, $28, $22, $26
-      .db $20, $26, $20, $24, $20, $26, $20, $28
-      .db $20, $26, $20, $28, $20, $26, $20, $24
-      .db $20, $26, $20, $24, $20, $26, $20, $28
-      .db $20, $26, $20, $28, $20, $26, $20, $24
-      .db $28, $30, $28, $32, $28, $30, $28, $2e
-      .db $28, $30, $28, $2e, $28, $2c, $28, $2e
-      .db $28, $30, $28, $32, $28, $30, $28, $2e
-      .db $28, $30, $28, $2e, $28, $2c, $28, $2e, $00
+      .byte $80, $22, $28, $22, $26, $22, $24, $22, $26
+      .byte $22, $28, $22, $2a, $22, $28, $22, $26
+      .byte $22, $28, $22, $26, $22, $24, $22, $26
+      .byte $22, $28, $22, $2a, $22, $28, $22, $26
+      .byte $20, $26, $20, $24, $20, $26, $20, $28
+      .byte $20, $26, $20, $28, $20, $26, $20, $24
+      .byte $20, $26, $20, $24, $20, $26, $20, $28
+      .byte $20, $26, $20, $28, $20, $26, $20, $24
+      .byte $28, $30, $28, $32, $28, $30, $28, $2e
+      .byte $28, $30, $28, $2e, $28, $2c, $28, $2e
+      .byte $28, $30, $28, $32, $28, $30, $28, $2e
+      .byte $28, $30, $28, $2e, $28, $2c, $28, $2e, $00
 
-      .db $04, $70, $6e, $6c, $6e, $70, $72, $70, $6e
-      .db $70, $6e, $6c, $6e, $70, $72, $70, $6e
-      .db $6e, $6c, $6e, $70, $6e, $70, $6e, $6c
-      .db $6e, $6c, $6e, $70, $6e, $70, $6e, $6c
-      .db $76, $78, $76, $74, $76, $74, $72, $74
-      .db $76, $78, $76, $74, $76, $74, $72, $74
+      .byte $04, $70, $6e, $6c, $6e, $70, $72, $70, $6e
+      .byte $70, $6e, $6c, $6e, $70, $72, $70, $6e
+      .byte $6e, $6c, $6e, $70, $6e, $70, $6e, $6c
+      .byte $6e, $6c, $6e, $70, $6e, $70, $6e, $6c
+      .byte $76, $78, $76, $74, $76, $74, $72, $74
+      .byte $76, $78, $76, $74, $76, $74, $72, $74
 
-      .db $84, $1a, $83, $18, $20, $84, $1e, $83, $1c, $28
-      .db $26, $1c, $1a, $1c
+      .byte $84, $1a, $83, $18, $20, $84, $1e, $83, $1c, $28
+      .byte $26, $1c, $1a, $1c
 
 GameOverMusData:
-      .db $82, $2c, $04, $04, $22, $04, $04, $84, $1c, $87
-      .db $26, $2a, $26, $84, $24, $28, $24, $80, $22, $00
+      .byte $82, $2c, $04, $04, $22, $04, $04, $84, $1c, $87
+      .byte $26, $2a, $26, $84, $24, $28, $24, $80, $22, $00
 
-      .db $9c, $05, $94, $05, $0d, $9f, $1e, $9c, $98, $9d
+      .byte $9c, $05, $94, $05, $0d, $9f, $1e, $9c, $98, $9d
 
-      .db $82, $22, $04, $04, $1c, $04, $04, $84, $14
-      .db $86, $1e, $80, $16, $80, $14
+      .byte $82, $22, $04, $04, $1c, $04, $04, $84, $14
+      .byte $86, $1e, $80, $16, $80, $14
 
 TimeRunOutMusData:
-      .db $81, $1c, $30, $04, $30, $30, $04, $1e, $32, $04, $32, $32
-      .db $04, $20, $34, $04, $34, $34, $04, $36, $04, $84, $36, $00
+      .byte $81, $1c, $30, $04, $30, $30, $04, $1e, $32, $04, $32, $32
+      .byte $04, $20, $34, $04, $34, $34, $04, $36, $04, $84, $36, $00
 
-      .db $46, $a4, $64, $a4, $48, $a6, $66, $a6, $4a, $a8, $68, $a8
-      .db $6a, $44, $2b
+      .byte $46, $a4, $64, $a4, $48, $a6, $66, $a6, $4a, $a8, $68, $a8
+      .byte $6a, $44, $2b
 
-      .db $81, $2a, $42, $04, $42, $42, $04, $2c, $64, $04, $64, $64
-      .db $04, $2e, $46, $04, $46, $46, $04, $22, $04, $84, $22
+      .byte $81, $2a, $42, $04, $42, $42, $04, $2c, $64, $04, $64, $64
+      .byte $04, $2e, $46, $04, $46, $46, $04, $22, $04, $84, $22
 
 WinLevelMusData:
-      .db $87, $04, $06, $0c, $14, $1c, $22, $86, $2c, $22
-      .db $87, $04, $60, $0e, $14, $1a, $24, $86, $2c, $24
-      .db $87, $04, $08, $10, $18, $1e, $28, $86, $30, $30
-      .db $80, $64, $00
+      .byte $87, $04, $06, $0c, $14, $1c, $22, $86, $2c, $22
+      .byte $87, $04, $60, $0e, $14, $1a, $24, $86, $2c, $24
+      .byte $87, $04, $08, $10, $18, $1e, $28, $86, $30, $30
+      .byte $80, $64, $00
 
-      .db $cd, $d5, $dd, $e3, $ed, $f5, $bb, $b5, $cf, $d5
-      .db $db, $e5, $ed, $f3, $bd, $b3, $d1, $d9, $df, $e9
-      .db $f1, $f7, $bf, $ff, $ff, $ff, $34
-      .db $00 ;unused byte
+      .byte $cd, $d5, $dd, $e3, $ed, $f5, $bb, $b5, $cf, $d5
+      .byte $db, $e5, $ed, $f3, $bd, $b3, $d1, $d9, $df, $e9
+      .byte $f1, $f7, $bf, $ff, $ff, $ff, $34
+      .byte $00 ;unused byte
 
-      .db $86, $04, $87, $14, $1c, $22, $86, $34, $84, $2c
-      .db $04, $04, $04, $87, $14, $1a, $24, $86, $32, $84
-      .db $2c, $04, $86, $04, $87, $18, $1e, $28, $86, $36
-      .db $87, $30, $30, $30, $80, $2c
+      .byte $86, $04, $87, $14, $1c, $22, $86, $34, $84, $2c
+      .byte $04, $04, $04, $87, $14, $1a, $24, $86, $32, $84
+      .byte $2c, $04, $86, $04, $87, $18, $1e, $28, $86, $36
+      .byte $87, $30, $30, $30, $80, $2c
 
 ;square 2 and triangle use the same data, square 1 is unused
 UndergroundMusData:
-      .db $82, $14, $2c, $62, $26, $10, $28, $80, $04
-      .db $82, $14, $2c, $62, $26, $10, $28, $80, $04
-      .db $82, $08, $1e, $5e, $18, $60, $1a, $80, $04
-      .db $82, $08, $1e, $5e, $18, $60, $1a, $86, $04
-      .db $83, $1a, $18, $16, $84, $14, $1a, $18, $0e, $0c
-      .db $16, $83, $14, $20, $1e, $1c, $28, $26, $87
-      .db $24, $1a, $12, $10, $62, $0e, $80, $04, $04
-      .db $00
+      .byte $82, $14, $2c, $62, $26, $10, $28, $80, $04
+      .byte $82, $14, $2c, $62, $26, $10, $28, $80, $04
+      .byte $82, $08, $1e, $5e, $18, $60, $1a, $80, $04
+      .byte $82, $08, $1e, $5e, $18, $60, $1a, $86, $04
+      .byte $83, $1a, $18, $16, $84, $14, $1a, $18, $0e, $0c
+      .byte $16, $83, $14, $20, $1e, $1c, $28, $26, $87
+      .byte $24, $1a, $12, $10, $62, $0e, $80, $04, $04
+      .byte $00
 
 ;noise data directly follows square 2 here unlike in other songs
 WaterMusData:
-      .db $82, $18, $1c, $20, $22, $26, $28 
-      .db $81, $2a, $2a, $2a, $04, $2a, $04, $83, $2a, $82, $22
-      .db $86, $34, $32, $34, $81, $04, $22, $26, $2a, $2c, $30
-      .db $86, $34, $83, $32, $82, $36, $84, $34, $85, $04, $81, $22
-      .db $86, $30, $2e, $30, $81, $04, $22, $26, $2a, $2c, $2e
-      .db $86, $30, $83, $22, $82, $36, $84, $34, $85, $04, $81, $22
-      .db $86, $3a, $3a, $3a, $82, $3a, $81, $40, $82, $04, $81, $3a
-      .db $86, $36, $36, $36, $82, $36, $81, $3a, $82, $04, $81, $36
-      .db $86, $34, $82, $26, $2a, $36
-      .db $81, $34, $34, $85, $34, $81, $2a, $86, $2c, $00
+      .byte $82, $18, $1c, $20, $22, $26, $28 
+      .byte $81, $2a, $2a, $2a, $04, $2a, $04, $83, $2a, $82, $22
+      .byte $86, $34, $32, $34, $81, $04, $22, $26, $2a, $2c, $30
+      .byte $86, $34, $83, $32, $82, $36, $84, $34, $85, $04, $81, $22
+      .byte $86, $30, $2e, $30, $81, $04, $22, $26, $2a, $2c, $2e
+      .byte $86, $30, $83, $22, $82, $36, $84, $34, $85, $04, $81, $22
+      .byte $86, $3a, $3a, $3a, $82, $3a, $81, $40, $82, $04, $81, $3a
+      .byte $86, $36, $36, $36, $82, $36, $81, $3a, $82, $04, $81, $36
+      .byte $86, $34, $82, $26, $2a, $36
+      .byte $81, $34, $34, $85, $34, $81, $2a, $86, $2c, $00
 
-      .db $84, $90, $b0, $84, $50, $50, $b0, $00
+      .byte $84, $90, $b0, $84, $50, $50, $b0, $00
 
-      .db $98, $96, $94, $92, $94, $96, $58, $58, $58, $44
-      .db $5c, $44, $9f, $a3, $a1, $a3, $85, $a3, $e0, $a6
-      .db $23, $c4, $9f, $9d, $9f, $85, $9f, $d2, $a6, $23
-      .db $c4, $b5, $b1, $af, $85, $b1, $af, $ad, $85, $95
-      .db $9e, $a2, $aa, $6a, $6a, $6b, $5e, $9d
+      .byte $98, $96, $94, $92, $94, $96, $58, $58, $58, $44
+      .byte $5c, $44, $9f, $a3, $a1, $a3, $85, $a3, $e0, $a6
+      .byte $23, $c4, $9f, $9d, $9f, $85, $9f, $d2, $a6, $23
+      .byte $c4, $b5, $b1, $af, $85, $b1, $af, $ad, $85, $95
+      .byte $9e, $a2, $aa, $6a, $6a, $6b, $5e, $9d
 
-      .db $84, $04, $04, $82, $22, $86, $22
-      .db $82, $14, $22, $2c, $12, $22, $2a, $14, $22, $2c
-      .db $1c, $22, $2c, $14, $22, $2c, $12, $22, $2a, $14
-      .db $22, $2c, $1c, $22, $2c, $18, $22, $2a, $16, $20
-      .db $28, $18, $22, $2a, $12, $22, $2a, $18, $22, $2a
-      .db $12, $22, $2a, $14, $22, $2c, $0c, $22, $2c, $14, $22, $34, $12
-      .db $22, $30, $10, $22, $2e, $16, $22, $34, $18, $26
-      .db $36, $16, $26, $36, $14, $26, $36, $12, $22, $36
-      .db $5c, $22, $34, $0c, $22, $22, $81, $1e, $1e, $85, $1e
-      .db $81, $12, $86, $14
+      .byte $84, $04, $04, $82, $22, $86, $22
+      .byte $82, $14, $22, $2c, $12, $22, $2a, $14, $22, $2c
+      .byte $1c, $22, $2c, $14, $22, $2c, $12, $22, $2a, $14
+      .byte $22, $2c, $1c, $22, $2c, $18, $22, $2a, $16, $20
+      .byte $28, $18, $22, $2a, $12, $22, $2a, $18, $22, $2a
+      .byte $12, $22, $2a, $14, $22, $2c, $0c, $22, $2c, $14, $22, $34, $12
+      .byte $22, $30, $10, $22, $2e, $16, $22, $34, $18, $26
+      .byte $36, $16, $26, $36, $14, $26, $36, $12, $22, $36
+      .byte $5c, $22, $34, $0c, $22, $22, $81, $1e, $1e, $85, $1e
+      .byte $81, $12, $86, $14
 
 EndOfCastleMusData:
-      .db $81, $2c, $22, $1c, $2c, $22, $1c, $85, $2c, $04
-      .db $81, $2e, $24, $1e, $2e, $24, $1e, $85, $2e, $04
-      .db $81, $32, $28, $22, $32, $28, $22, $85, $32
-      .db $87, $36, $36, $36, $84, $3a, $00
+      .byte $81, $2c, $22, $1c, $2c, $22, $1c, $85, $2c, $04
+      .byte $81, $2e, $24, $1e, $2e, $24, $1e, $85, $2e, $04
+      .byte $81, $32, $28, $22, $32, $28, $22, $85, $32
+      .byte $87, $36, $36, $36, $84, $3a, $00
 
-      .db $5c, $54, $4c, $5c, $54, $4c
-      .db $5c, $1c, $1c, $5c, $5c, $5c, $5c
-      .db $5e, $56, $4e, $5e, $56, $4e
-      .db $5e, $1e, $1e, $5e, $5e, $5e, $5e
-      .db $62, $5a, $50, $62, $5a, $50
-      .db $62, $22, $22, $62, $e7, $e7, $e7, $2b
+      .byte $5c, $54, $4c, $5c, $54, $4c
+      .byte $5c, $1c, $1c, $5c, $5c, $5c, $5c
+      .byte $5e, $56, $4e, $5e, $56, $4e
+      .byte $5e, $1e, $1e, $5e, $5e, $5e, $5e
+      .byte $62, $5a, $50, $62, $5a, $50
+      .byte $62, $22, $22, $62, $e7, $e7, $e7, $2b
 
-      .db $86, $14, $81, $14, $80, $14, $14, $81, $14, $14, $14, $14
-      .db $86, $16, $81, $16, $80, $16, $16, $81, $16, $16, $16, $16
-      .db $81, $28, $22, $1a, $28, $22, $1a, $28, $80, $28, $28
-      .db $81, $28, $87, $2c, $2c, $2c, $84, $30
+      .byte $86, $14, $81, $14, $80, $14, $14, $81, $14, $14, $14, $14
+      .byte $86, $16, $81, $16, $80, $16, $16, $81, $16, $16, $16, $16
+      .byte $81, $28, $22, $1a, $28, $22, $1a, $28, $80, $28, $28
+      .byte $81, $28, $87, $2c, $2c, $2c, $84, $30
 
 VictoryM_P1AData:
 ;square 2
-    .db $84, $12, $86, $0c, $84, $62, $10, $86
-    .db $12, $84, $1c, $22, $1e, $22, $26, $18
-    .db $1e, $04, $1c, $00
+    .byte $84, $12, $86, $0c, $84, $62, $10, $86
+    .byte $12, $84, $1c, $22, $1e, $22, $26, $18
+    .byte $1e, $04, $1c, $00
 ;square 1
-    .db $e2, $e0, $e2, $9d, $1f, $21, $a3, $2d
-    .db $74, $f4, $31, $35, $37, $2b, $b1, $2d
+    .byte $e2, $e0, $e2, $9d, $1f, $21, $a3, $2d
+    .byte $74, $f4, $31, $35, $37, $2b, $b1, $2d
 ;triangle
-    .db $84, $12, $14, $04, $18, $1a, $1c, $14
-    .db $26, $22, $1e, $1c, $18, $1e, $22, $0c
-    .db $14
+    .byte $84, $12, $14, $04, $18, $1a, $1c, $14
+    .byte $26, $22, $1e, $1c, $18, $1e, $22, $0c
+    .byte $14
 
 VictoryM_P1BData:
 ;square 2
-    .db $81, $22, $83, $22, $86, $24, $85, $18
-    .db $82, $1e, $80, $1e, $83, $1c, $83, $18
-    .db $84, $1c, $81, $26, $83, $26, $86, $26
-    .db $85, $1e, $82, $24, $86, $22, $84, $1e
-    .db $00
+    .byte $81, $22, $83, $22, $86, $24, $85, $18
+    .byte $82, $1e, $80, $1e, $83, $1c, $83, $18
+    .byte $84, $1c, $81, $26, $83, $26, $86, $26
+    .byte $85, $1e, $82, $24, $86, $22, $84, $1e
+    .byte $00
 ;square 1
-    .db $74, $f4, $b5, $6b, $b0, $30, $ec, $ea
-    .db $2d, $76, $f6, $b7, $6d, $b0, $b5, $31
+    .byte $74, $f4, $b5, $6b, $b0, $30, $ec, $ea
+    .byte $2d, $76, $f6, $b7, $6d, $b0, $b5, $31
 ;triangle
-    .db $84, $12, $1c, $20, $24, $2a, $26, $24
-    .db $26, $22, $1e, $22, $24, $1e, $22, $0c
-    .db $1e
+    .byte $84, $12, $1c, $20, $24, $2a, $26, $24
+    .byte $26, $22, $1e, $22, $24, $1e, $22, $0c
+    .byte $1e
 ;noise (also used by part 1A)
-    .db $11, $11, $d0, $d0, $d0, $11, $00
+    .byte $11, $11, $d0, $d0, $d0, $11, $00
 
 VictoryM_P2AData:
 ;square 2
-    .db $83, $2c, $2a, $2c, $86, $26, $84, $28
-    .db $2a, $86, $2c, $84, $36, $81, $40, $83
-    .db $40, $84, $3a, $40, $3e, $34, $00
+    .byte $83, $2c, $2a, $2c, $86, $26, $84, $28
+    .byte $2a, $86, $2c, $84, $36, $81, $40, $83
+    .byte $40, $84, $3a, $40, $3e, $34, $00
 
 VictoryM_P2BData:
 ;square 2
-    .db $86, $3a, $84, $36, $00
+    .byte $86, $3a, $84, $36, $00
 ;square 1 of part 2A
-    .db $1d, $95, $19, $1b, $9d, $27, $2d, $29
-    .db $2d, $31, $23
+    .byte $1d, $95, $19, $1b, $9d, $27, $2d, $29
+    .byte $2d, $31, $23
 ;square 1 of part 2B
-    .db $a9, $27
+    .byte $a9, $27
 ;triangle of part 2A
-    .db $84, $1c, $1e, $04, $22, $24, $26, $1e
-    .db $30, $2c, $28, $26, $22, $28
+    .byte $84, $1c, $1e, $04, $22, $24, $26, $1e
+    .byte $30, $2c, $28, $26, $22, $28
 ;triangle of part 2B
-    .db $2c, $14, $1e
+    .byte $2c, $14, $1e
 
 VictoryM_P2CData:
 ;square 2
-    .db $81, $40, $83, $40, $86, $40, $85, $34
-    .db $82, $3a, $80, $3a, $83, $36, $34, $84
-    .db $36, $81, $3e, $83, $3e, $86, $3e, $85
-    .db $36, $82, $3a, $86, $40, $84, $3a, $00
+    .byte $81, $40, $83, $40, $86, $40, $85, $34
+    .byte $82, $3a, $80, $3a, $83, $36, $34, $84
+    .byte $36, $81, $3e, $83, $3e, $86, $3e, $85
+    .byte $36, $82, $3a, $86, $40, $84, $3a, $00
 ;square 1
-    .db $6c, $ec, $af, $63, $a8, $29, $c4, $e6
-    .db $e2, $27, $70, $f0, $b1, $69, $ae, $ad
-    .db $29
+    .byte $6c, $ec, $af, $63, $a8, $29, $c4, $e6
+    .byte $e2, $27, $70, $f0, $b1, $69, $ae, $ad
+    .byte $29
 ;triangle
-    .db $84, $1c, $26, $2a, $2e, $34, $30, $2e
-    .db $30, $2c, $28, $2c, $2e, $28, $2c, $14
-    .db $28
+    .byte $84, $1c, $26, $2a, $2e, $34, $30, $2e
+    .byte $30, $2c, $28, $2c, $2e, $28, $2c, $14
+    .byte $28
 ;noise of part 2A, 2B and 2C
-    .db $11, $11, $d0, $d0, $d0, $11, $00
+    .byte $11, $11, $d0, $d0, $d0, $11, $00
 
 VictoryM_P2DData:
 ;square 2
-    .db $87, $3a, $36, $00
+    .byte $87, $3a, $36, $00
 ;square 1
-    .db $e9, $e7
+    .byte $e9, $e7
 ;triangle
-    .db $83, $16, $1c, $22, $28, $2e, $34, $84
-    .db $3a, $83, $34, $22, $34, $84, $36, $83
-    .db $1e, $1e, $1e, $86, $1e
+    .byte $83, $16, $1c, $22, $28, $2e, $34, $84
+    .byte $3a, $83, $34, $22, $34, $84, $36, $83
+    .byte $1e, $1e, $1e, $86, $1e
 ;noise of part 2D
-    .db $11, $11, $d0, $d0, $d0, $11, $00
+    .byte $11, $11, $d0, $d0, $d0, $11, $00
 
 FreqRegLookupTbl: ;PAL diff: Different frequencies to accomodate clock speed differences
-      .db $00, $88, $00, $2b, $00, $00
-      .db $02, $72, $02, $4f, $02, $2e, $02, $0e
-      .db $01, $f1, $01, $ba, $01, $a1, $01, $8a
-      .db $01, $74, $01, $5F, $01, $4B, $01, $39
-      .db $01, $27, $01, $17, $01, $07, $00, $F8
-      .db $00, $EA, $00, $DD, $00, $D1, $00, $C5
-      .db $00, $BA, $00, $AF, $00, $A5, $00, $9C
-      .db $00, $94, $00, $8B, $00, $83, $00, $7C
-      .db $00, $6E, $00, $74, $00, $68, $00, $4E
-      .db $00, $5C, $00, $58, $00, $52, $00, $4A
-      .db $00, $42, $00, $3E, $00, $36, $00, $31
-      .db $00, $27, $00, $20, $04, $1D, $03, $15
-      .db $02, $BE, $02, $98, $01, $D5, $00, $62
+      .byte $00, $88, $00, $2b, $00, $00
+      .byte $02, $72, $02, $4f, $02, $2e, $02, $0e
+      .byte $01, $f1, $01, $ba, $01, $a1, $01, $8a
+      .byte $01, $74, $01, $5F, $01, $4B, $01, $39
+      .byte $01, $27, $01, $17, $01, $07, $00, $F8
+      .byte $00, $EA, $00, $DD, $00, $D1, $00, $C5
+      .byte $00, $BA, $00, $AF, $00, $A5, $00, $9C
+      .byte $00, $94, $00, $8B, $00, $83, $00, $7C
+      .byte $00, $6E, $00, $74, $00, $68, $00, $4E
+      .byte $00, $5C, $00, $58, $00, $52, $00, $4A
+      .byte $00, $42, $00, $3E, $00, $36, $00, $31
+      .byte $00, $27, $00, $20, $04, $1D, $03, $15
+      .byte $02, $BE, $02, $98, $01, $D5, $00, $62
 
 MusicLengthLookupTbl: ;PAL diff: Different lengths to accomodate speed differences
-      .db $04, $08, $10, $20, $40, $18, $30, $0C
-      .db $03, $06, $0C, $18, $30, $12, $24, $08
-      .db $03, $06, $0C, $18, $30, $12, $24, $08
-      .db $24, $02, $06, $04, $0C, $12, $18, $08
-      .db $1B, $01, $05, $03, $09, $0D, $12, $06
-      .db $12, $01, $03, $02, $06, $09, $0C, $04
-      .db $24, $12, $0d, $09, $1b, $28, $36, $12 ;these two used in victory music only
-      .db $24, $12, $0d, $09, $1b, $28, $36, $6c
+      .byte $04, $08, $10, $20, $40, $18, $30, $0C
+      .byte $03, $06, $0C, $18, $30, $12, $24, $08
+      .byte $03, $06, $0C, $18, $30, $12, $24, $08
+      .byte $24, $02, $06, $04, $0C, $12, $18, $08
+      .byte $1B, $01, $05, $03, $09, $0D, $12, $06
+      .byte $12, $01, $03, $02, $06, $09, $0C, $04
+      .byte $24, $12, $0d, $09, $1b, $28, $36, $12 ;these two used in victory music only
+      .byte $24, $12, $0d, $09, $1b, $28, $36, $6c
 
 VictoryMusEnvData:
-      .db $97, $98, $9a, $9b, $9b, $9a, $9a, $99
-      .db $99, $98, $98, $97, $97, $96, $96, $95
-      .db $02 ;needed to produce correct sound
+      .byte $97, $98, $9a, $9b, $9b, $9a, $9a, $99
+      .byte $99, $98, $98, $97, $97, $96, $96, $95
+      .byte $02 ;needed to produce correct sound
 
 EndOfCastleMusicEnvData:
-      .db $98, $99, $9a, $9b
+      .byte $98, $99, $9a, $9b
 
 AreaMusicEnvData:
-      .db $90, $94, $94, $95, $95, $96, $97, $98
+      .byte $90, $94, $94, $95, $95, $96, $97, $98
 
 WaterEventMusEnvData:
-      .db $90, $91, $92, $92, $93, $93, $93, $94
-      .db $94, $94, $94, $94, $94, $95, $95, $95
-      .db $95, $95, $95, $96, $96, $96, $96, $96
-      .db $96, $96, $96, $96, $96, $96, $96, $96
-      .db $96, $96, $96, $96, $95, $95, $94, $93
+      .byte $90, $91, $92, $92, $93, $93, $93, $94
+      .byte $94, $94, $94, $94, $94, $95, $95, $95
+      .byte $95, $95, $95, $96, $96, $96, $96, $96
+      .byte $96, $96, $96, $96, $96, $96, $96, $96
+      .byte $96, $96, $96, $96, $95, $95, $94, $93
 
 BowserFlameEnvData:
-      .db $15, $16, $16, $17, $17, $18, $19, $19
-      .db $1a, $1a, $1c, $1d, $1d, $1e, $1e, $1f
-      .db $1f, $1f, $1f, $1e, $1d, $1c, $1e, $1f
-      .db $1f, $1e, $1d, $1c, $1a, $18, $16, $14
+      .byte $15, $16, $16, $17, $17, $18, $19, $19
+      .byte $1a, $1a, $1c, $1d, $1d, $1e, $1e, $1f
+      .byte $1f, $1f, $1f, $1e, $1d, $1c, $1e, $1f
+      .byte $1f, $1e, $1d, $1c, $1a, $18, $16, $14
 
 BrickShatterEnvData:
-      .db $15, $16, $16, $17, $17, $18, $19, $19
-      .db $1a, $1a, $1c, $1d, $1d, $1e, $1e, $1f
+      .byte $15, $16, $16, $17, $17, $18, $19, $19
+      .byte $1a, $1a, $1c, $1d, $1d, $1e, $1e, $1f
 
 ;-------------------------------------------------------------------------------------
