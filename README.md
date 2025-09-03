@@ -12,7 +12,7 @@ Apply the patch to a clean Super Mario Bros. 2 FDS ROM. The MD5 hash of the ROM 
 
 You can use an BPS patcher such as https://www.marcrobledo.com/RomPatcher.js/ to apply the patch. You may need to change the file extension of the output file to ".nes" after patching.
 
-The source code compiles with asm6, provided in the repo. If using Windows, the provided batch file can compile automatically.
+The source code compiles with CA65.
 
 ## Credits
 
